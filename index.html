@@ -40,25 +40,41 @@
       /* Text pas di garis hitam */
       .teks {
         position: absolute;
-        left: 250px; /* geser supaya pas di garis */
-        font-size: 20px;
+        left: 250px; /* default posisi */
         width: 300px;
         text-align: left;
         font-weight: bold; /* teks tebal */
         color: #ffb000; /* warna kuning emas */
+        font-family: "Montserrat", sans-serif;
       }
 
+      /* Baris 1 (besar) */
       #teks1 {
         top: 481px; /* atur agar pas */
-        left: 280px; /* atur agar pas */
+        left: 280px;
+        font-size: 20px; /* ukuran khusus */
       }
+
+      /* Baris 2 (lebih kecil) */
       #teks2 {
         top: 515px; /* atur agar pas */
-        left: 280px; /* atur agar pas */
+        left: 280px;
+        font-size: 15px; /* ukuran khusus */
       }
+
+      /* Baris 3 (lebih kecil) */
       #teks3 {
-        top: 549px; /* atur agar pas */
-        left: 280px; /* atur agar pas */
+        position: absolute;
+        top: 549px; /* posisi default */
+        left: 280px;
+        font-size: 15px;
+        width: 180px; /* batas lebar */
+        padding: 0;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: nowrap;
+        transition: top 0.2s ease; /* biar pergeseran halus */
       }
 
       .form-inputs {
@@ -133,7 +149,52 @@
 
       <button onclick="window.print()">Print Name Tag</button>
     </div>
+    <script>
+      // Resize font supaya teks3 muat dalam 180px
+      function resizeFont(teksEl, maxWidth, minFont = 8, maxFont = 15) {
+        let fontSize = maxFont;
+        teksEl.style.fontSize = fontSize + "px";
 
+        while (teksEl.scrollWidth > maxWidth && fontSize > minFont) {
+          fontSize -= 1;
+          teksEl.style.fontSize = fontSize + "px";
+        }
+      }
+
+      const teks3 = document.getElementById("teks3");
+      const inputTeks3 = document.getElementById("inputTeks3");
+
+      inputTeks3.addEventListener("input", function () {
+        teks3.innerText = this.value;
+        resizeFont(teks3, 180);
+      });
+
+      // Foto preview
+      document
+        .getElementById("inputFoto")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              document.getElementById("previewFoto").src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // Update teks 1 & 2
+      document
+        .getElementById("inputTeks1")
+        .addEventListener("input", function () {
+          document.getElementById("teks1").innerText = this.value;
+        });
+      document
+        .getElementById("inputTeks2")
+        .addEventListener("input", function () {
+          document.getElementById("teks2").innerText = this.value;
+        });
+    </script>
     <script>
       // Preview foto ganti border merah
       document
