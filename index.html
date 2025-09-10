@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Generator Name Tag</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Montserrat", sans-serif;
+        display: flex; /* aktifkan flex */
+        flex-direction: column; /* susun vertikal */
+        align-items: center; /* horizontal center */
+        justify-content: center; /* vertical center */
+        padding: 20px;
+        min-height: 100vh; /* biar benar2 di tengah layar */
+        text-align: center; /* teks default rata tengah */
+      }
+      .nametag-container {
+        position: relative;
+        width: 600px; /* atur sesuai kebutuhan */
+      }
+
+      .nametag-container img.template {
+        width: 100%;
+        display: block;
+      }
+
+      /* Bungkus foto dan ornamen */
+      #fotoWrapper {
+        position: absolute;
+        top: 481px; /* posisi foto */
+        left: 168px;
+        width: 90px; /* ukuran foto */
+        height: 115px;
+        z-index: 2; /* tetap di bawah teks tapi di atas template */
+        /* Tambahin ini buat placeholder */
+        background-color: #ddd; /* abu-abu */
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="90" height="115" viewBox="0 0 90 115"><circle cx="45" cy="35" r="20" fill="%23aaa"/><rect x="15" y="65" width="60" height="40" rx="10" fill="%23aaa"/></svg>');
+        background-size: 50%;
+        background-repeat: no-repeat;
+        background-position: center;
+        overflow: hidden;
+      }
+
+      /* Kalau ada gambar, background hilang */
+      #previewFoto:not([src=""]) {
+        background: none;
+      }
+
+      /* Foto tetap isi wrapper */
+      #previewFoto {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        z-index: 1;
+      }
+
+      /* Ornamen selalu nempel di dalam wrapper */
+      .ornament {
+        position: absolute;
+        bottom: 0; /* tempel di bawah foto */
+        height: 110px; /* atur sesuai proporsinya */
+        z-index: 2;
+      }
+
+      /* Kiri & kanan mirror */
+      #ornament-left {
+        left: 0;
+      }
+
+      #ornament-right {
+        right: 0;
+        transform: scaleX(-1);
+      }
+
+      /* Tengah di bawah */
+      #ornament-middle {
+        left: 44%;
+        transform: translateX(-50%);
+      }
+
+      /* Text pas di garis hitam */
+      .teks {
+        position: absolute;
+        left: 250px; /* default posisi */
+        width: 300px;
+        text-align: left;
+        font-weight: bold; /* teks tebal */
+        color: #ffb000; /* warna kuning emas */
+        font-family: "Montserrat", sans-serif;
+      }
+
+      /* Baris 1 (besar) */
+      #teks1 {
+        font-family: "Cabin Sketch", cursive; /* pakai font Cabin Sketch */
+        top: 481px; /* atur agar pas */
+        left: 280px;
+        font-size: 20px; /* ukuran khusus */
+      }
+
+      /* Baris 2 (lebih kecil) */
+      #teks2 {
+        font-family: "Cabin Sketch", cursive; /* pakai font Cabin Sketch */
+        top: 515px; /* atur agar pas */
+        left: 280px;
+        font-size: 15px; /* ukuran khusus */
+      }
+
+      /* Baris 3 (lebih kecil) */
+      #teks3 {
+        font-family: "Cabin Sketch", cursive; /* pakai font Cabin Sketch */
+        position: absolute;
+        top: 549px; /* posisi default */
+        left: 280px;
+        font-size: 15px;
+        width: 180px; /* batas lebar */
+        padding: 0;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: nowrap;
+        transition: top 0.2s ease; /* biar pergeseran halus */
+      }
+
+      .form-inputs {
+        margin-top: 20px;
+      }
+
+      /* Saat print, hanya tampil nametag */
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        .nametag-container,
+        .nametag-container *,
+        .header,
+        .header *,
+        .support,
+        .support * {
+          visibility: visible;
+        }
+        .nametag-container {
+          position: absolute;
+          top: 80px; /* kasih jarak supaya tidak ketumpuk header */
+          left: 0;
+        }
+        .header {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          text-align: center;
+        }
+        .support {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          text-align: center;
+          font-size: 14px;
+          font-family: "Montserrat", sans-serif;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <style>
+      .header {
+        display: flex;
+        align-items: center; /* logo & teks rata tengah secara vertikal */
+        justify-content: center; /* posisikan semuanya di tengah halaman */
+        gap: 10px; /* jarak antara logo dan teks */
+        margin-bottom: 20px;
+      }
+      .header h2 a {
+        color: inherit; /* ikuti warna teks h2 */
+        text-decoration: none; /* hilangkan garis bawah */
+      }
+
+      .header h2 a:hover {
+        text-decoration: underline; /* kasih efek hover biar interaktif */
+      }
+
+      .logo {
+        width: 40px; /* atur ukuran logo */
+        height: auto;
+      }
+    </style>
+    <div class="header">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <h2>
+        Artwork by
+        <a href="https://instagram.com/bntbgs" target="_blank">Bagas.</a> -
+        <a href="https://instagram.com/iam.levi_" target="_blank">Levian</a>
+      </h2>
+    </div>
+    <!-- Tambahan teks support us -->
+    <div class="support">
+      Support us on insta <br />
+      @bntbgs <br />
+      @iam.levi_
+    </div>
+    <div class="nametag-container">
+      <!-- Template -->
+      <img
+        src="Untitled design (1).png"
+        alt="Template Nametag"
+        class="template"
+      />
+
+      <div id="fotoWrapper">
+        <img id="previewFoto" src="" alt="Foto Preview" />
+        <img id="ornament-left" class="ornament" src="OrnamentCorner.png" />
+        <img id="ornament-right" class="ornament" src="OrnamentCorner.png" />
+        <img id="ornament-middle" class="ornament" src="OrnamentMiddle.png" />
+      </div>
+      <!-- Teks 3 baris -->
+      <div id="teks1" class="teks"></div>
+      <div id="teks2" class="teks"></div>
+      <div id="teks3" class="teks"></div>
+    </div>
+
+    <div class="form-inputs">
+      <label>Upload Foto: </label>
+      <input type="file" id="inputFoto" accept="image/*" /><br /><br />
+
+      <label>Nama: </label>
+      <input type="text" id="inputTeks1" /><br /><br />
+
+      <label>Jurusan: </label>
+      <input type="text" id="inputTeks2" /><br /><br />
+
+      <label>Prodi: </label>
+      <input type="text" id="inputTeks3" /><br /><br />
+
+      <button onclick="window.print()">Print Name Tag</button>
+    </div>
+
+    <script>
+      // Resize font supaya teks3 muat dalam 180px
+      function resizeFont(teksEl, maxWidth, minFont = 8, maxFont = 15) {
+        let fontSize = maxFont;
+        teksEl.style.fontSize = fontSize + "px";
+
+        while (teksEl.scrollWidth > maxWidth && fontSize > minFont) {
+          fontSize -= 1;
+          teksEl.style.fontSize = fontSize + "px";
+        }
+      }
+
+      const teks3 = document.getElementById("teks3");
+      const inputTeks3 = document.getElementById("inputTeks3");
+
+      inputTeks3.addEventListener("input", function () {
+        teks3.innerText = this.value;
+        resizeFont(teks3, 180);
+      });
+
+      // Foto preview
+      document
+        .getElementById("inputFoto")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              document.getElementById("previewFoto").src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // Update teks 1 & 2
+      document
+        .getElementById("inputTeks1")
+        .addEventListener("input", function () {
+          document.getElementById("teks1").innerText = this.value;
+        });
+      document
+        .getElementById("inputTeks2")
+        .addEventListener("input", function () {
+          document.getElementById("teks2").innerText = this.value;
+        });
+    </script>
+  </body>
+</html>
